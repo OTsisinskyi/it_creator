@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/input_form.css">
+	<link
+		href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500&family=Roboto:wght@400;500&display=swap"
+		rel="preconnect">
+</head>
+
+<body>
+	<div class="main">
+		<div class="container">
+
+			<div class="main__items">
+				<a href="#">Contact Me</a>
+			</div>
+
+			<div class="main__content">
+				<div class="main__content-text">
+					Let me know if you want to talk
+					about a potential collaboration.
+					I'm available for freelance work.
+					</p>
+				</div>
+				<div class="main__content-link">
+					<a href="#">infoname@mail.com</a>
+				</div>
+			</div>
+
+			<form action="/form-data" method="POST" encytpe="ENCTYPE_HERE" class="main__form">
+				<div class="main__form-input">
+					<div class="main__input-data">
+						<input type="text" name="username" required>
+						<div class="main__input-underline"></div>
+						<label for="username">Whats your name?</label>
+					</div>
+					<div class="main__input-data">
+						<input type="text" name="email" required>
+						<div class="main__input-underline"></div>
+						<label for="email">Your email</label>
+					</div>
+					<div class="main__input-data">
+						<input type="text" name="text" required>
+						<div class="main__input-underline"></div>
+						<label for="text">Tell me about your project</label>
+					</div>
+				</div>
+				<div class="main__form-confirm">
+					<div class="main__form-confirm-btn">
+						<button type="submit" value="submit">Send</button>
+					</div>
+					<div class="main__form-confirm-icon">
+						<img src="img/Vector.png" alt="#">
+						<img src="img/Group.png" alt="#">
+					</div>
+				</div>
+			</form>
+			<footer>
+				<div class="main__footer-text">Lets be Friends</div>
+
+				<div class="main__footer-sn">
+					<div class="sn-item">
+						<img src="img/Polygon-1-copy-2 2.png" alt="#">
+						<img src="img/inst.png" alt="#">
+					</div>
+					<div class="sn-item">
+						<img src="img/Polygon-1-copy-2 2.png" alt="#">
+						<img src="img/inst.png" alt="#">
+					</div>
+					<div class="sn-item">
+						<img src="img/Polygon-1-copy-2 2.png" alt="#">
+						<img src="img/inst.png" alt="#">
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+	<script>
+		const form = document.querySelector("form");
+		form.addEventListener("submit", (e) => {
+			e.preventDefault();
+			const formData = new FormData(form);
+			form.reset();
+			axios.post("http://localhost:5000/form-data", formData, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
+			})
+				.then((res) => {
+					if (res.data === false) {
+						alert('The e-mail address you entered is not valid. Make sure you use the service: "@gmail"')
+					} else {
+						alert("Your message has been sent");
+					}
+
+				})
+				.catch((err) => {
+					console.log(err)
+				});
+		});
+	</script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+.main__input-data {
+	color: #A8A0B0;
+	width: 100%;
+	position: relative;
+	font-size: 20px;
+	line-height: 26px;
+}
+
+.main__input-data:not(:last-child) {
+	margin-bottom: 88px;
+}
+
+.main__input-data input {
+	height: 100%;
+	width: 100%;
+	border: none;
+	outline: none;
+	border-bottom: 2px solid #DAD2E3;
+	background: transparent;
+}
+
+.main__input-data input:focus~label,
+.main__input-data input:valid~label {
+	transform: translateY(-20px);
+	color: #8643DC;
+	font-size: 15px;
+}
+
+.main__input-data label {
+	position: absolute;
+	bottom: 17px;
+	left: 0;
+	pointer-events: none;
+	transition: all 0.3s ease;
+}
+
+.main__input-data .main__input-underline {
+	position: absolute;
+	bottom: 0px;
+	height: 2px;
+	width: 100%;
+}
+
+
+.main__input-data .main__input-underline::before {
+	position: absolute;
+	content: "";
+	height: 100%;
+	width: 100%;
+	background: #8643DC;
+	transform: scaleX(0);
+	transition: transform 0.3s ease;
+}
+
+.main__input-data input:focus~.main__input-underline::before,
+.main__input-data input:valid~.main__input-underline::before {
+	transform: scaleX(1);
+}
