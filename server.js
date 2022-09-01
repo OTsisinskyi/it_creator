@@ -1,29 +1,23 @@
 const express = require("express");
-let fileUpload = require("express-fileupload");
-const cors = require('cors');
+const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 
-// https://gentle-dusk-44061.herokuapp.com/
 const app = express();
-app.use(cors())
-app.use(fileUpload());
-app.use(express.urlencoded({ extended: true }));
+const PORT = process.env.PORT || 8080;
 
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json())
 
-function sendData(resultData, callback) {
-	let username = resultData.username;
-	let email = resultData.email;
-	let text = resultData.text;
+let mailTransporter = nodemailer.createTransport({
+	service: "gmail",
+	auth: {
+		user: "demodemmoo12@gmail.com",
+		pass: "dsozgorppxjabxpg"
+	}
+})
 
-	let mailTransporter = nodemailer.createTransport({
-		service: "gmail",
-		auth: {
-			user: "demodemmoo12@gmail.com",
-			pass: "dsozgorppxjabxpg"
-		}
-	})
-
+function sendData(username, email, text) {
 	let details = {
 		from: "demodemmoo12@gmail.com",
 		to: email,
@@ -32,25 +26,20 @@ function sendData(resultData, callback) {
 	}
 	mailTransporter.sendMail(details, (err) => {
 		if (err) {
-			return callback(false);
-		}
-		else {
-			return callback(true);
+			console.log(err)
 		}
 	})
 }
 
-app.post("/form-data", (req, res) => {
-	sendData(req.body, function (response) {
-		res.send(response)
-	});
+app.post('/api/user-data', (req, res) => {
+	const body = req.body;
+	sendData(body.username, body.mail, body.text);
+	res.redirect("/");
+})
 
-});
 
-
-app.listen(5000, () => {
-	console.log("Server started on port http://localhost:5000");
-});
-
+app.listen(PORT, () => {
+	console.log(`Server started on port http://localhost:${PORT}`)
+})
 
 
